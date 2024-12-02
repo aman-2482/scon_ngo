@@ -13,7 +13,13 @@
 
     #gallery {
       background-color: white;
+      padding-top: 100px;
     }
+    @media (max-width: 767px) {
+  #gallery {
+    padding-top: 120px; /* Increase padding on mobile to avoid overlap with the drawer */
+  }
+}
 
     /* Mobile drawer styles */
     .drawer {
