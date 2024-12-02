@@ -13,6 +13,9 @@
   <style>
     body {
       font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
     }
 
     /* Header Styling */
@@ -25,6 +28,7 @@
       right: 0;
       z-index: 100;
       padding: 16px 0;
+      width: 100%;
     }
 
     .header-content {
@@ -123,16 +127,50 @@
     .drawer {
       transform: translateX(-100%);
       transition: transform 0.3s ease-in-out;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 40;
     }
 
     .drawer.open {
       transform: translateX(0);
     }
 
-    /* Close button in drawer */
     .drawer button {
       margin-left: auto;
       display: block;
+    }
+
+    /* Adjust Drawer button positioning */
+    #closeButton {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 767px) {
+      /* Image Section Title */
+      .image-section h2 {
+        font-size: 2.5rem;
+      }
+
+      .image-section p {
+        font-size: 1.2rem;
+      }
+
+      /* Drawer */
+      .drawer {
+        width: 75%; /* Adjust width of drawer */
+        background-color: #333; /* Make it darker for visibility */
+      }
+
+      /* Content Section Adjustments */
+      .content-section {
+        padding: 20px;
+      }
     }
 
   </style>
@@ -142,7 +180,7 @@
   <!-- Header Section -->
   <header>
     <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">&nbsp;&nbsp;&nbsp;&nbsp;SCON - Society for Conservation of Nature</h1>
+      <h1 class="text-xl font-bold">SCON - Society for Conservation of Nature</h1>
       <!-- Mobile hamburger menu button -->
       <button id="menuButton" class="block lg:hidden text-white">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
@@ -160,7 +198,7 @@
   </header>
 
   <!-- Mobile Drawer -->
-  <div id="drawer" class="drawer fixed top-12 left-0 bg-gray-700 bg-opacity-90 w-64 h-full z-40 lg:hidden">
+  <div id="drawer" class="drawer fixed top-0 left-0 bg-gray-700 bg-opacity-90 w-64 h-full z-40 lg:hidden">
     <div class="flex justify-between items-center p-4 text-white">
       <h1 class="text-xl font-bold">Close</h1>
       <button id="closeButton" class="text-white">
@@ -179,10 +217,10 @@
 
   <!-- Scrolling Image Section -->
   <div class="image-section">
-    <h2 class="text-4xl font-bold animate__animated animate__fadeIn animate__delay-1s">
+    <h2 class="text-4xl font-bold">
       SCON - Society for Conservation of Nature
     </h2>
-    <p class="mt-4 text-lg font-light animate__animated animate__fadeIn animate__delay-2s">
+    <p class="mt-4 text-lg font-light">
       Dedicated to the conservation of vultures and the preservation of our ecosystems.
     </p>
   </div>
@@ -249,3 +287,4 @@
 
 </body>
 </html>
+a
