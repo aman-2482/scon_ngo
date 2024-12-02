@@ -15,8 +15,13 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      padding-top: 10;
+      padding-top: 100px; 
     }
+    @media (max-width: 767px) {
+  #contact {
+    padding-top: 120px; /* Increase padding on mobile to avoid overlap with the drawer */
+  }
+}
 
     /* Mobile Drawer Styles */
     .drawer {
