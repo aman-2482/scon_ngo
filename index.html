@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SCON - Conservation of Nature</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
   <style>
     html {
       scroll-behavior: smooth;
@@ -17,29 +16,41 @@
       background-position: center;
       background-attachment: fixed;
     }
-    /* Custom background images */
-   
+
     #about {
-      background-color: white; /* Set white background for About Us */
+      background-color: white;
     }
-    /* Gallery specific styling */
+
     #gallery {
       display: flex;
       overflow-x: scroll;
       gap: 1rem;
-      padding-bottom: 2rem; /* To ensure scroll visibility */
+      padding-bottom: 2rem;
     }
+
     .gallery-item {
-      flex: 1 0 33.33%; /* Equal width for all images */
+      flex: 1 0 33.33%;
       min-width: 0;
       display: flex;
       justify-content: center;
     }
+
     .gallery-item img {
       width: 100%;
       height: auto;
       object-fit: cover;
     }
+
+    /* Navbar styles for mobile drawer */
+    .drawer {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
   </style>
 </head>
 <body class="bg-gray-100">
@@ -48,14 +59,37 @@
   <header class="bg-gradient-to-r from-gray-700 to-gray-500 text-white fixed w-full z-50 p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-xl font-bold">SCON - Society for Conservation of Nature</h1>
-      <nav>
-        <a href="index.html" class="px-4 hover:text-gray-200">Home</a>
-        <a href="about.html" class="px-4 hover:text-gray-200">About</a>
-        <a href="gallery.html" class="px-4 hover:text-gray-200">Gallery</a>
-        <a href="contact.html" class="px-4 hover:text-gray-200">Contact</a>
+      <button id="menuButton" class="block lg:hidden text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <nav class="hidden lg:flex space-x-4">
+        <a href="index.html" class="hover:text-gray-200">Home</a>
+        <a href="about.html" class="hover:text-gray-200">About</a>
+        <a href="gallery.html" class="hover:text-gray-200">Gallery</a>
+        <a href="contact.html" class="hover:text-gray-200">Contact</a>
       </nav>
     </div>
   </header>
+
+  <!-- Mobile Drawer -->
+  <div id="drawer" class="drawer fixed top-0 left-0 bg-gray-700 bg-opacity-90 w-64 h-full z-40 lg:hidden">
+    <div class="flex justify-between items-center p-4 text-white">
+      <h1 class="text-xl font-bold">SCON</h1>
+      <button id="closeButton" class="text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="flex flex-col p-4 text-white">
+      <a href="index.html" class="py-2">Home</a>
+      <a href="about.html" class="py-2">About</a>
+      <a href="gallery.html" class="py-2">Gallery</a>
+      <a href="contact.html" class="py-2">Contact</a>
+    </nav>
+  </div>
 
   <!-- Hero Section -->
   <section id="hero" class="min-h-screen bg-cover bg-center flex flex-col justify-center items-center text-center px-4 relative" style="background-image: url('images/vulture-7690279.jpg');">
@@ -65,7 +99,7 @@
         Celebrating Vultures and Nature Conservation
       </h1>
       <p class="mt-6 text-xl text-white font-light animate-fadeIn leading-relaxed">
-        Join us in our mission to protect vultures and conserve our ecosystem. Vultures play a vital role in maintaining environmental balance. Let’s raise awareness and work together for a sustainable future.
+        Join us in our mission to protect vultures and conserve our ecosystem.
       </p>
       <a href="about.html" class="mt-8 bg-gray-700 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
         Learn More
@@ -78,7 +112,7 @@
     <div class="container mx-auto text-center">
       <h2 class="text-3xl font-bold text-black animate-fadeIn">About Us</h2>
       <p class="mt-4 text-lg text-black max-w-3xl mx-auto animate-slideUp">
-        SCON (Society for Conservation of Nature) is a dedicated non-profit organization working towards the conservation of vultures and wildlife. Our team conducts awareness campaigns, rescue operations, and educational programs to highlight the importance of protecting these majestic scavengers, which are critical to our ecosystem.
+        SCON (Society for Conservation of Nature) is a dedicated non-profit organization working towards the conservation of vultures and wildlife.
       </p>
     </div>
   </section>
@@ -114,45 +148,19 @@
       <form class="mt-6 max-w-3xl mx-auto bg-white p-6 shadow-lg rounded-lg">
         <div class="mb-4">
           <label for="name" class="block text-gray-800 font-medium">Name</label>
-          <input
-            type="text"
-            id="name"
-            class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-500"
-            placeholder="Your Full Name"
-            required
-          >
+          <input type="text" id="name" class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-500" placeholder="Your Full Name" required>
         </div>
         <div class="mb-4">
           <label for="email" class="block text-gray-800 font-medium">Email</label>
-          <input
-            type="email"
-            id="email"
-            class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-500"
-            placeholder="Your Email Address"
-            required
-          >
+          <input type="email" id="email" class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-500" placeholder="Your Email" required>
         </div>
-        <div class="mb-4">
-          <label for="message" class="block text-gray-800 font-medium">Message</label>
-          <textarea
-            id="message"
-            class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-500"
-            rows="5"
-            placeholder="Your Message"
-            required
-          ></textarea>
-        </div>
-        <button
-          type="submit"
-          class="w-full bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600 transition"
-        >
+        <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-500 w-full">
           Submit
         </button>
       </form>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="bg-gradient-to-r from-gray-700 to-gray-500 text-white text-center p-4">
     <p>&copy; 2024 SCON. All Rights Reserved.</p>
   </footer>
@@ -162,23 +170,19 @@
     // GSAP Animations
     gsap.from("#hero h1", { duration: 1.5, opacity: 0, y: -50, ease: "power3.out" });
     gsap.from("#hero p", { duration: 1.5, opacity: 0, y: 50, delay: 0.3, ease: "power3.out" });
-    gsap.from("#about h2", { duration: 1.5, opacity: 0, x: -50, ease: "power3.out" });
-    gsap.from("#about p", { duration: 1.5, opacity: 0, x: 50, delay: 0.3, ease: "power3.out", stagger: 0.2 });
 
-    // Page transition animations for smooth scrolling and section reveals
-    gsap.utils.toArray("section").forEach(function(section) {
-      gsap.from(section, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top bottom",
-          end: "top center",
-          scrub: 1,
-        },
-      });
+    // Mobile drawer toggle
+    const menuButton = document.getElementById('menuButton');
+    const drawer = document.getElementById('drawer');
+    const closeButton = document.getElementById('closeButton');
+
+    // Toggle drawer visibility
+    menuButton.addEventListener('click', () => {
+      drawer.classList.toggle('open');
+    });
+
+    closeButton.addEventListener('click', () => {
+      drawer.classList.remove('open');
     });
   </script>
 </body>

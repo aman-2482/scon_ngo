@@ -47,34 +47,34 @@
 
     /* Scrolling Image Section */
     .image-section {
-  background-image: url('images/t1.jpg'); /* Update with your image path */
-  background-size: cover;
-  background-position: center;
-  height: 60vh; /* Image section height */
-  margin-top: 80px; /* Add space to avoid overlap with the fixed header */
-  display: flex;
-  flex-direction: column; /* Stack items vertically */
-  justify-content: center; /* Vertically center the items */
-  align-items: center; /* Horizontally center the items */
-  text-align: center;
-  color: white;
-  padding: 20px;
-}
+      background-image: url('images/t1.jpg'); /* Update with your image path */
+      background-size: cover;
+      background-position: center;
+      height: 60vh; /* Image section height */
+      margin-top: 80px; /* Add space to avoid overlap with the fixed header */
+      display: flex;
+      flex-direction: column; /* Stack items vertically */
+      justify-content: center; /* Vertically center the items */
+      align-items: center; /* Horizontally center the items */
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
 
-.image-section h2 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  max-width: 80%;
-  margin: 0;
-  padding-bottom: 10px; /* Adds space between the title and paragraph */
-}
+    .image-section h2 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      max-width: 80%;
+      margin: 0;
+      padding-bottom: 10px; /* Adds space between the title and paragraph */
+    }
 
-.image-section p {
-  font-size: 1.4rem;
-  font-weight: 400;
-  max-width: 80%;
-  margin: 0;
-}
+    .image-section p {
+      font-size: 1.4rem;
+      font-weight: 400;
+      max-width: 80%;
+      margin: 0;
+    }
 
     /* Main Content Section Styling */
     .content-section {
@@ -119,6 +119,22 @@
       padding: 20px;
     }
 
+    /* Mobile Drawer Styles */
+    .drawer {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    /* Close button in drawer */
+    .drawer button {
+      margin-left: auto;
+      display: block;
+    }
+
   </style>
 </head>
 <body class="bg-gray-100">
@@ -127,18 +143,42 @@
   <header>
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-xl font-bold">&nbsp;&nbsp;&nbsp;&nbsp;SCON - Society for Conservation of Nature</h1>
-      <nav class="flex">
-        <a href="index.html" class="px-4 hover:text-gray-200">Home</a>
-        <a href="about.html" class="px-4 hover:text-gray-200">About</a>
-        <a href="gallery.html" class="px-4 hover:text-gray-200">Gallery</a>
-        <a href="contact.html" class="px-4 hover:text-gray-200">Contact</a>
+      <!-- Mobile hamburger menu button -->
+      <button id="menuButton" class="block lg:hidden text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <!-- Desktop navigation (visible on large screens) -->
+      <nav class="hidden lg:flex space-x-4">
+        <a href="index.html" class="hover:text-gray-200">Home</a>
+        <a href="about.html" class="hover:text-gray-200">About</a>
+        <a href="gallery.html" class="hover:text-gray-200">Gallery</a>
+        <a href="contact.html" class="hover:text-gray-200">Contact</a>
       </nav>
     </div>
   </header>
 
+  <!-- Mobile Drawer -->
+  <div id="drawer" class="drawer fixed top-0 left-0 bg-gray-700 bg-opacity-90 w-64 h-full z-40 lg:hidden">
+    <div class="flex justify-between items-center p-4 text-white">
+      <h1 class="text-xl font-bold">SCON</h1>
+      <button id="closeButton" class="text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="flex flex-col p-4 text-white">
+      <a href="index.html" class="py-2">Home</a>
+      <a href="about.html" class="py-2">About</a>
+      <a href="gallery.html" class="py-2">Gallery</a>
+      <a href="contact.html" class="py-2">Contact</a>
+    </nav>
+  </div>
+
   <!-- Scrolling Image Section -->
-<!-- Scrolling Image Section -->
-<div class="image-section">
+  <div class="image-section">
     <h2 class="text-4xl font-bold animate__animated animate__fadeIn animate__delay-1s">
       SCON - Society for Conservation of Nature
     </h2>
@@ -146,7 +186,6 @@
       Dedicated to the conservation of vultures and the preservation of our ecosystems.
     </p>
   </div>
-  
 
   <!-- About Us Content Section -->
   <div class="content-section">
@@ -189,6 +228,24 @@
   <footer>
     <p>&copy; 2024 SCON. All Rights Reserved.</p>
   </footer>
+
+  <!-- JavaScript for Drawer -->
+  <script>
+    // Mobile drawer toggle
+    const menuButton = document.getElementById('menuButton');
+    const drawer = document.getElementById('drawer');
+    const closeButton = document.getElementById('closeButton');
+
+    // Open drawer when hamburger icon is clicked
+    menuButton.addEventListener('click', () => {
+      drawer.classList.toggle('open');
+    });
+
+    // Close drawer when close button is clicked
+    closeButton.addEventListener('click', () => {
+      drawer.classList.remove('open');
+    });
+  </script>
 
 </body>
 </html>
