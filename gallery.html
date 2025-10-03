@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Set character encoding and viewport for responsive design -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gallery - SCON</title>
+  <!-- Import Tailwind CSS for utility-first styling -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: smooth; /* Enable smooth scrolling */
     }
 
     #gallery {
       background-color: white;
-      padding-top: 100px;
+      padding-top: 100px; /* Space for fixed header */
     }
     @media (max-width: 767px) {
-  #gallery {
-    padding-top: 120px; /* Increase padding on mobile to avoid overlap with the drawer */
-  }
-}
+      #gallery {
+        padding-top: 120px; /* More space for mobile drawer */
+      }
+    }
 
-    /* Mobile drawer styles */
+    /* Styles for mobile navigation drawer */
     .drawer {
       transform: translateX(-100%);
       transition: transform 0.3s ease-in-out;
@@ -31,7 +33,7 @@
       transform: translateX(0);
     }
 
-    /* Close button in drawer */
+    /* Style for close button in drawer */
     .drawer button {
       margin-left: auto;
       display: block;
@@ -40,17 +42,18 @@
 </head>
 <body class="bg-gray-100">
 
-  <!-- Header -->
+  <!-- Header: Contains site title and navigation -->
   <header class="bg-gradient-to-r from-gray-700 to-gray-500 text-white fixed w-full z-50 p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-xl font-bold">SCON - Society for Conservation of Nature</h1>
-      <!-- Mobile hamburger menu button -->
+      <!-- Hamburger menu for mobile screens -->
       <button id="menuButton" class="block lg:hidden text-white">
+        <!-- Hamburger icon SVG -->
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
-      <!-- Desktop navigation (visible on large screens) -->
+      <!-- Desktop navigation links -->
       <nav class="hidden lg:flex space-x-4">
         <a href="index.html" class="hover:text-gray-200">Home</a>
         <a href="about.html" class="hover:text-gray-200">About</a>
@@ -60,16 +63,19 @@
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
+  <!-- Mobile Drawer: Slide-out navigation for small screens -->
   <div id="drawer" class="drawer fixed top-11 left-0 bg-gray-700 bg-opacity-90 w-64 h-full z-40 lg:hidden">
     <div class="flex justify-between items-center p-4 text-white">
       <h1 class="text-xl font-bold">Close</h1>
+      <!-- Button to close the drawer -->
       <button id="closeButton" class="text-white">
+        <!-- Close icon SVG -->
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
+    <!-- Drawer navigation links -->
     <nav class="flex flex-col p-4 text-white">
       <a href="index.html" class="py-2">Home</a>
       <a href="about.html" class="py-2">About</a>
@@ -78,20 +84,22 @@
     </nav>
   </div>
 
-  <!-- Gallery Section -->
+  <!-- Gallery Section: Displays event images in a grid -->
   <section id="gallery" class="py-20 bg-white">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Gallery</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Gallery Items in Grid Layout -->
+        <!-- Gallery Item 1 -->
         <div class="rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition">
           <img src="images/vulture-7690279.jpg" alt="Event 1" class="w-full">
           <p class="text-center text-gray-700 mt-2">International Vulture Awareness Day</p>
         </div>
+        <!-- Gallery Item 2 -->
         <div class="rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition">
           <img src="images/t1.jpg" alt="Event 2" class="w-full">
           <p class="text-center text-gray-700 mt-2">Community Workshop on Wildlife Protection</p>
         </div>
+        <!-- Gallery Item 3 -->
         <div class="rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition">
           <img src="images/t2.jpg" alt="Event 3" class="w-full">
           <p class="text-center text-gray-700 mt-2">Efforts to plant more trees in Uttar Pradesh</p>
@@ -100,13 +108,13 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer: Copyright information -->
   <footer class="bg-gradient-to-r from-gray-700 to-gray-500 text-white text-center p-4">
     <p>&copy; 2024 SCON. All Rights Reserved.</p>
   </footer>
 
   <script>
-    // Mobile drawer toggle
+    // Mobile drawer toggle functionality
     const menuButton = document.getElementById('menuButton');
     const drawer = document.getElementById('drawer');
     const closeButton = document.getElementById('closeButton');
