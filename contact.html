@@ -1,57 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact Us - SCON</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    html {
-      scroll-behavior: smooth;
+    :root{
+      --accent: #16a34a;
+      --accent-2: #05a875;
     }
+    html { scroll-behavior: smooth; font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    body { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+    /* Section background + animated gradient blobs */
     #contact {
-      background-image: url('images/2dd.jpg');
+      background-image: linear-gradient(180deg, rgba(6,95,70,0.35), rgba(4,32,21,0.55)), url('images/2dd.jpg');
+      background-blend-mode: overlay;
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      padding-top: 100px; 
+      padding-top: 120px;
+      position: relative;
+      min-height: calc(100vh - 140px);
+      overflow: hidden;
     }
+    /* decorative animated blobs (using pseudo-elements) */
+    #contact::before,
+    #contact::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(36px);
+      opacity: .35;
+      transform-origin: center;
+      z-index: 0;
+    }
+    #contact::before {
+      width: 420px; height: 420px; right: -120px; top: -80px;
+      background: radial-gradient(circle at 30% 30%, rgba(24,128,82,0.9), rgba(5,150,105,0.6));
+      animation: blobMove 10s ease-in-out infinite alternate;
+    }
+    #contact::after {
+      width: 360px; height: 360px; left: -100px; bottom: -80px;
+      background: radial-gradient(circle at 70% 70%, rgba(8,100,70,0.7), rgba(16,185,129,0.35));
+      animation: blobMove 12s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes blobMove { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-18px) scale(1.06); } }
+
+    /* Drawer */
+    .drawer { transform: translateX(-100%); transition: transform .28s ease-in-out; }
+    .drawer.open { transform: translateX(0); }
+
+    /* Glass card */
+    .glass {
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transform-origin: center;
+    }
+
+    /* Floating label fields */
+    .field { position: relative; }
+    .field input, .field textarea {
+      background: transparent;
+      color: #052e24;
+      caret-color: var(--accent);
+      padding: 1.05rem .75rem .55rem .75rem;
+      border-radius: .6rem;
+      border: 1px solid rgba(4,32,21,0.06);
+      width: 100%;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+      transition: box-shadow .18s, border-color .18s, transform .18s;
+    }
+    .field input:focus, .field textarea:focus { transform: translateY(-1px); }
+    .field label {
+      position: absolute;
+      left: .85rem;
+      top: .85rem;
+      transform-origin: left top;
+      color: rgba(4,32,21,0.6);
+      transition: transform .16s ease, top .16s ease, color .16s ease, font-size .16s ease;
+      pointer-events: none;
+      background: transparent;
+    }
+    .field.filled label, .field input:focus + label, .field textarea:focus + label {
+      transform: translateY(-0.9rem) scale(.85);
+      color: var(--accent);
+    }
+    .field input:focus, .field textarea:focus {
+      outline: none;
+      border-color: rgba(16,185,129,0.35);
+      box-shadow: 0 8px 30px rgba(16,185,129,0.08);
+    }
+
+    /* focus ring for accessibility */
+    .field input:focus-visible, .field textarea:focus-visible { box-shadow: 0 0 0 4px rgba(16,185,129,0.08); }
+
+    /* Decorative floating animation for cards */
+    @keyframes floatCard {
+      0% { transform: translateY(10px) rotate(-0.2deg) scale(.98); opacity: 0; }
+      60% { transform: translateY(-6px) rotate(0.3deg) scale(1.01); opacity: 1; }
+      100% { transform: translateY(0) rotate(0) scale(1); opacity: 1; }
+    }
+
+    /* Reveal animation helpers (staggered via JS) */
+    .reveal { opacity: 0; transform: translateY(14px); transition: transform .6s cubic-bezier(.2,.9,.3,1), opacity .6s ease; will-change: transform, opacity; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* subtle header animated gradient */
+    header { transform: translateY(-6px); transition: transform .45s ease, box-shadow .3s; background-size: 200% 200%; animation: headerGradient 8s linear infinite; }
+    @keyframes headerGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    header.scrolled { transform: translateY(0); box-shadow: 0 10px 30px rgba(2,6,23,0.15); }
+
+    /* Button with ripple and glow */
+    .btn-accent {
+      background: linear-gradient(90deg, rgba(34,197,94,1), rgba(16,185,129,1));
+      box-shadow: 0 14px 40px rgba(16,185,129,0.12);
+      transition: transform .16s cubic-bezier(.2,.9,.3,1), box-shadow .16s ease, filter .12s ease;
+      position: relative; overflow: hidden; border: none; cursor: pointer;
+    }
+    .btn-accent:hover { transform: translateY(-4px) scale(1.02); filter: brightness(1.04); box-shadow: 0 20px 60px rgba(16,185,129,0.16); }
+    /* ripple */
+    .btn-accent .ripple {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .btn-accent .ripple span {
+      position: absolute; width: 12px; height: 12px; background: rgba(255,255,255,0.28); border-radius: 50%; transform: translate(-50%,-50%) scale(0); opacity: 0; transition: transform .48s cubic-bezier(.2,.9,.3,1), opacity .28s ease;
+    }
+    .btn-accent.ripple-play .ripple span { transform: translate(-50%,-50%) scale(60); opacity: .12; }
+
+    /* animated check mark (hidden by default) */
+    .btn-check { display: inline-flex; align-items: center; gap: .5rem; }
+    .check-svg { width: 18px; height: 18px; display: inline-block; transform-origin: center; transition: transform .28s ease, opacity .28s ease; opacity: 0; transform: scale(.6) rotate(-10deg); }
+    .check-show .check-svg { opacity: 1; transform: scale(1) rotate(0); }
+
+    /* small success pulse */
+    @keyframes successPulse { 0% { box-shadow: 0 8px 24px rgba(5,150,105,0.08); } 50% { box-shadow: 0 18px 48px rgba(16,185,129,0.12); } 100% { box-shadow: 0 8px 24px rgba(5,150,105,0.08); } }
+    .btn-success-animate { animation: successPulse .9s ease; }
+
     @media (max-width: 767px) {
-  #contact {
-    padding-top: 120px; /* Increase padding on mobile to avoid overlap with the drawer */
-  }
-}
-
-    /* Mobile Drawer Styles */
-    .drawer {
-      transform: translateX(-100%);
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .drawer.open {
-      transform: translateX(0);
-    }
-
-    .drawer button {
-      margin-left: auto;
-      display: block;
+      #contact { padding-top: 140px; }
+      .drawer { top: 64px; }
     }
   </style>
 </head>
 <body class="bg-gray-100">
 
   <!-- Header -->
-  <header class="bg-gradient-to-r from-gray-700 to-gray-500 text-white fixed w-full z-50 p-4 shadow-md">
+  <header id="siteHeader" class="bg-gradient-to-r from-gray-700 to-gray-500 text-white fixed w-full z-50 p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-xl font-bold">SCON - Society for Conservation of Nature</h1>
-      <!-- Mobile hamburger menu button -->
-      <button id="menuButton" class="block lg:hidden text-white">
+      <button id="menuButton" class="block lg:hidden text-white" aria-label="Open menu">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
-      <!-- Desktop navigation (visible on large screens) -->
       <nav class="hidden lg:flex space-x-4">
         <a href="about.html" class="px-4 hover:text-gray-200">About</a>
         <a href="gallery.html" class="px-4 hover:text-gray-200">Gallery</a>
@@ -61,10 +168,10 @@
   </header>
 
   <!-- Mobile Drawer -->
-  <div id="drawer" class="drawer fixed top-11 left-0 bg-gray-700 bg-opacity-90 w-64 h-full z-40 lg:hidden">
+  <div id="drawer" class="drawer fixed top-11 left-0 bg-gray-700 bg-opacity-90 w-64 h-full z-40 lg:hidden" aria-hidden="true">
     <div class="flex justify-between items-center p-4 text-white">
-      <h1 class="text-xl font-bold">Close</h1>
-      <button id="closeButton" class="text-white">
+      <h2 class="text-lg font-bold">Menu</h2>
+      <button id="closeButton" class="text-white" aria-label="Close menu">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -80,72 +187,206 @@
 
   <!-- Contact Section -->
   <section id="contact" class="py-20 text-white">
-    <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center text-green-800">Get in Touch</h2>
-      <p class="mt-4 text-center text-green-400">
-        We’d love to hear from you! Connect with us to learn more about our work or to join our mission.
-      </p>
-      <form class="mt-6 max-w-3xl mx-auto bg-white p-6 shadow-lg rounded-lg">
-        <div class="mb-4">
-          <label for="name" class="block text-gray-800 font-medium">Name</label>
-          <input
-            type="text"
-            id="name"
-            class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-500"
-            placeholder="Your Full Name"
-            required
-          >
+    <div class="container mx-auto relative z-10 px-4">
+      <div class="max-w-5xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
+
+        <!-- Left: intro / contact info -->
+        <div class="reveal" data-reveal>
+          <div class="p-6 rounded-xl glass text-white shadow-lg" style="animation: floatCard .64s cubic-bezier(.2,.9,.3,1) both; position: relative; z-index: 5;">
+              <!-- social icons -->
+              <div class="flex items-center space-x-3 mb-4" style="z-index:6;">
+                <a href="#" class="p-2 rounded-md bg-white bg-opacity-10 hover:bg-opacity-20 transition" aria-label="Twitter">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M23 3s-1 .5-2 1c-1 0-3 1-4 1 0 0 1-1 1-2 0-1-1-1-2-1-2 0-3 2-3 4 0 .5 0 1 .5 1.5C8 7 5 5 3 3c0 1 1 3 3 4-2 0-5 2-5 5 0 2 2 3 4 3-1 2-1 4 0 6 2 1 4 1 6 0 3-2 5-6 5-10v-1c1-1 2-2 3-3z"></path></svg>
+                </a>
+                <a href="#" class="p-2 rounded-md bg-white bg-opacity-10 hover:bg-opacity-20 transition" aria-label="Facebook">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z"></path></svg>
+                </a>
+                <a href="#" class="p-2 rounded-md bg-white bg-opacity-10 hover:bg-opacity-20 transition" aria-label="Instagram">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4" ry="4"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><path d="M17.5 6.5h.01"></path></svg>
+                </a>
+              </div>
+            <h2 class="text-4xl font-extrabold leading-tight text-green-50 drop-shadow-lg">Get in Touch</h2>
+            <p class="mt-4 text-green-100/90 max-w-lg">
+              We'd love to hear from you. Share your thoughts, ask questions or join our conservation efforts. Reach out — together we can make an impact.
+            </p>
+
+            <div class="mt-6 grid grid-cols-1 gap-3 text-sm text-green-50/90">
+              <div class="flex items-start space-x-3">
+                <svg class="h-6 w-6 text-green-200 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 12a4 4 0 10-8 0 4 4 0 008 0z" /></svg>
+                <div>
+                  <div class="font-semibold">Head Office</div>
+                  <div class="text-xs text-green-100/80">123 Greenway Ave, City, Country</div>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <svg class="h-6 w-6 text-green-200 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7l-9 6-9-6v10a2 2 0 002 2z" /></svg>
+                <div>
+                  <div class="font-semibold">Email</div>
+                  <div class="text-xs text-green-100/80">contact@scon.org</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <a href="about.html" class="inline-block px-4 py-2 rounded-md bg-white text-green-700 font-semibold shadow-sm hover:shadow-md transition">Learn More</a>
+            </div>
+          </div>
         </div>
-        <div class="mb-4">
-          <label for="email" class="block text-gray-800 font-medium">Email</label>
-          <input
-            type="email"
-            id="email"
-            class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-500"
-            placeholder="Your Email Address"
-            required
-          >
+
+        <!-- Right: form -->
+        <div class="reveal" data-reveal>
+          <form id="contactForm" class="mt-4 glass p-6 rounded-xl shadow-xl" aria-label="Contact form">
+            <div class="grid gap-4">
+              <div class="field bg-white rounded-lg p-1" id="nameField">
+                <input type="text" id="name" autocomplete="name" required aria-required="true" />
+                <label for="name">Full name</label>
+              </div>
+
+              <div class="field bg-white rounded-lg p-1" id="emailField">
+                <input type="email" id="email" autocomplete="email" required aria-required="true" />
+                <label for="email">Email address</label>
+              </div>
+
+              <div class="field bg-white rounded-lg p-1" id="messageField">
+                <textarea id="message" rows="5" required aria-required="true"></textarea>
+                <label for="message">Your message</label>
+              </div>
+
+              <button type="submit" class="btn-accent text-white font-semibold py-3 rounded-lg w-full" aria-live="polite">
+                <div class="relative flex items-center justify-center">
+                  <span class="btn-label">Send Message</span>
+                  <span class="btn-check ml-3" aria-hidden="true">
+                    <svg class="check-svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+                <div class="ripple" aria-hidden="true"><span></span></div>
+              </button>
+            </div>
+          </form>
         </div>
-        <div class="mb-4">
-          <label for="message" class="block text-gray-800 font-medium">Message</label>
-          <textarea
-            id="message"
-            class="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-500"
-            rows="5"
-            placeholder="Your Message"
-            required
-          ></textarea>
-        </div>
-        <button
-          type="submit"
-          class="w-full bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600 transition"
-        >
-          Submit
-        </button>
-      </form>
+
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="bg-gradient-to-r from-gray-700 to-gray-500 text-white text-center p-4">
-    <p>&copy; 2024 SCON. All Rights Reserved.</p>
+    <p>&copy; 2025 SCON. All Rights Reserved.</p>
   </footer>
 
-  <!-- JavaScript for Drawer -->
   <script>
-    // Mobile drawer toggle
+    // Drawer toggle
     const menuButton = document.getElementById('menuButton');
     const drawer = document.getElementById('drawer');
     const closeButton = document.getElementById('closeButton');
-
-    // Open drawer when hamburger icon is clicked
-    menuButton.addEventListener('click', () => {
+    menuButton && menuButton.addEventListener('click', () => {
       drawer.classList.toggle('open');
+      drawer.setAttribute('aria-hidden', drawer.classList.contains('open') ? 'false' : 'true');
+    });
+    closeButton && closeButton.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
     });
 
-    // Close drawer when close button is clicked
-    closeButton.addEventListener('click', () => {
-      drawer.classList.remove('open');
+    // Header shadow on scroll
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 8);
+    });
+
+    // Reveal on scroll with staggered animation
+    const reveals = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            // use dataset to stagger if provided, otherwise stagger by order
+            const idx = Array.from(reveals).indexOf(el);
+            const base = 90; // faster base stagger
+            const delay = (el.dataset.revealDelay ? parseInt(el.dataset.revealDelay, 10) : idx * base);
+            setTimeout(() => { el.classList.add('active'); }, delay);
+            obs.unobserve(el);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach((el, i) => { el.classList.add('reveal'); obs.observe(el); el.style.willChange = 'transform,opacity'; });
+    } else {
+      reveals.forEach((el, i) => setTimeout(() => el.classList.add('active'), i * 90));
+    }
+
+    // Floating labels
+    document.querySelectorAll('.field input, .field textarea').forEach(input => {
+      const wrapper = input.closest('.field');
+      const update = () => {
+        if (input.value.trim() !== '') wrapper.classList.add('filled');
+        else wrapper.classList.remove('filled');
+      };
+      input.addEventListener('input', update);
+      input.addEventListener('blur', update);
+      input.addEventListener('focus', () => wrapper.classList.add('focused'));
+      input.addEventListener('blur', () => wrapper.classList.remove('focused'));
+      update();
+    });
+
+    // Animated submit: show check mark and pulse animation
+    const form = document.getElementById('contactForm');
+    form && form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const label = btn.querySelector('.btn-label');
+      const check = btn.querySelector('.check-svg');
+      if (!btn) return;
+      btn.disabled = true;
+      label.textContent = 'Sending...';
+      // small fake request
+      setTimeout(() => {
+        label.textContent = 'Message Sent';
+        btn.classList.add('check-show', 'btn-success-animate');
+        // play ripple
+        btn.classList.add('ripple-play');
+        // reveal check svg
+        setTimeout(() => {
+          // keep success state briefly
+        }, 300);
+        setTimeout(() => {
+          // reset
+          btn.classList.remove('check-show');
+          btn.classList.remove('ripple-play');
+          btn.classList.remove('btn-success-animate');
+          label.textContent = 'Send Message';
+          btn.disabled = false;
+          form.reset();
+          document.querySelectorAll('.field').forEach(f => f.classList.remove('filled'));
+        }, 2000);
+      }, 900);
+    });
+
+    // Ripple effect: position ripple span where user clicked
+    document.querySelectorAll('.btn-accent').forEach(btn => {
+      btn.addEventListener('click', (ev) => {
+        const ripple = btn.querySelector('.ripple span');
+        if (!ripple) return;
+        const rect = btn.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        // add class briefly to play transform
+        btn.classList.add('ripple-play');
+        setTimeout(() => btn.classList.remove('ripple-play'), 600);
+      });
+      // keyboard activation
+      btn.addEventListener('keydown', (ev) => {
+        if (ev.key === ' ' || ev.key === 'Enter') {
+          const ripple = btn.querySelector('.ripple span');
+          if (!ripple) return;
+          // center ripple for keyboard
+          ripple.style.left = '50%'; ripple.style.top = '50%';
+          btn.classList.add('ripple-play');
+          setTimeout(() => btn.classList.remove('ripple-play'), 600);
+        }
+      });
     });
   </script>
 </body>
