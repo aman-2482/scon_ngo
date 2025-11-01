@@ -13,6 +13,7 @@ This project is built using the following web technologies:
 - **HTML5** – Structure and markup of the website
 - **CSS3** – Styling and responsive design
 - **JavaScript (Vanilla)** – Interactivity and dynamic components
+- **Python 
 
 ---
 
