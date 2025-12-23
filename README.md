@@ -17,14 +17,7 @@ This project is built using the following web technologies:
 
 ---
 
-## 🎯 Goals of the Website
 
-- Inform the public about SCON's mission and initiatives
-- Allow users to contact the NGO or volunteer
-- Share event updates and success stories
-- Promote social protection through digital content
-
----
 
 ## 🐛 Issues Open for Hacktoberfest
 
