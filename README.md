@@ -8,7 +8,7 @@ Welcome to the official repository of the **SCON Protection NGO Website** — a 
 
 ## 🛠️ Tech Stack
 
-This project is built using the following web technologies:
+
 
 - **HTML5** – Structure and markup of the website
 - **CSS3** – Styling and responsive design
