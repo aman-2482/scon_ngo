@@ -285,16 +285,7 @@ Please follow the existing HTML/CSS style and keep PRs small and focused.
 └─ images/            # Media assets
 ```
 
----
 
-## ✅ Accessibility & Best Practices (quick wins)
-
-- Add meaningful alt text for all images in `gallery.html` and elsewhere
-- Ensure focus outlines are visible for keyboard users
-- Use semantic tags (`main`, `nav`, `header`, `footer`)
-- Add meta viewport tag in head for mobile scaling (already present in `index.html`?)
-
----
 
 ## ⚠️ License
 
