@@ -289,9 +289,4 @@ Please follow the existing HTML/CSS style and keep PRs small and focused.
 
 ## ⚠️ License
 
-Add a license file (e.g., `LICENSE` with MIT or CC0) if you want to permit reuse. If you want, I can add a recommended `LICENSE` file.
-
----
-
-Thank you for checking out SCON Protection — small contributions make a big difference!
-
+Add a license file (e.g., `LICENSE` with MIT or CC0) if you want to permit reuse. If you want, I can add a recommended `LICENSE` 
