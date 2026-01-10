@@ -209,7 +209,7 @@ Here are a couple of images from the `images/` folder used for the gallery and h
 - Responsive layout with CSS (mobile-first) — ready for small tweaks
 - Vanilla JS (in `script.js`) for lightweight interactivity
 - Image gallery and contact page
-- Easy to fork and customize for local NGOs or community projects
+
 
 ---
 
